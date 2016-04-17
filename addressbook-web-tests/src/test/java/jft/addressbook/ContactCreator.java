@@ -1,3 +1,5 @@
+package jft.addressbook;
+
 import jft.addressbook.ContactData;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
