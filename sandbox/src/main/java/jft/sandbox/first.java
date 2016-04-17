@@ -1,4 +1,4 @@
-package jft.homework1;
+package jft.sandbox;
 
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
