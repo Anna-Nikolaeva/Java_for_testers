@@ -1,20 +1,29 @@
-package jft.addressbook;
+package jft.addressbook.appmanager;
 
-import jft.addressbook.ContactData;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.Test;
+import jft.addressbook.model.ContactData;
+import jft.addressbook.model.GroupData;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.*;
-
-public class ContactCreator {
+/**
+ * Created by Anna on 17.04.16.
+ */
+public class ApplicationManager {
     FirefoxDriver wd;
-    
-    @BeforeMethod
-    public void setUp() throws Exception {
+
+    public static boolean isAlertPresent(FirefoxDriver wd) {
+        try {
+            wd.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
+    }
+
+    public void init() {
         wd = new FirefoxDriver();
         wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/index.php");
@@ -22,6 +31,7 @@ public class ContactCreator {
     }
 
     private void login(String username, String password) {
+
         wd.findElement(By.name("user")).click();
         wd.findElement(By.name("user")).clear();
         wd.findElement(By.name("user")).sendKeys(username);
@@ -31,24 +41,61 @@ public class ContactCreator {
         wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
     }
 
-    @Test
-    public void testContactCreation() {
-
-        goToAddContact();
-        fillContactForm(new ContactData("first", "middle", "last", "nickname", "Microsoft", "111222333", "444555666", "first.lastmiddle.@microsoft.com", "1978"));
-        submitContactForm();
-        goHome();
+    public void returnToGroupPage() {
+        wd.findElement(By.linkText("group page")).click();
     }
 
-    private void goHome() {
+    public void submitGroupCreation() {
+        wd.findElement(By.name("submit")).click();
+    }
+
+    public void fillGroupForm(GroupData groupData) {
+        wd.findElement(By.name("group_name")).click();
+        wd.findElement(By.name("group_name")).clear();
+        wd.findElement(By.name("group_name")).sendKeys(groupData.getName());
+        wd.findElement(By.name("group_header")).click();
+        wd.findElement(By.name("group_header")).clear();
+        wd.findElement(By.name("group_header")).sendKeys(groupData.getHeader());
+        wd.findElement(By.name("group_footer")).click();
+        wd.findElement(By.name("group_footer")).clear();
+        wd.findElement(By.name("group_footer")).sendKeys(groupData.getFooter());
+    }
+
+    public void initGroupCreation() {
+        wd.findElement(By.name("new")).click();
+    }
+
+    public void goToGroups() {
+        wd.findElement(By.linkText("groups")).click();
+    }
+
+    public void stop() {
+        wd.quit();
+    }
+
+    public void deleteSelectedGroups() {
+        wd.findElement(By.name("delete")).click();
+    }
+
+    public void selectFirstElement() {
+        wd.findElement(By.cssSelector("span.group")).click();
+        if (!wd.findElement(By.name("selected[]")).isSelected()) {
+            wd.findElement(By.name("selected[]")).click();
+        }
+    }
+
+
+
+
+    public void goHome() {
         wd.findElement(By.linkText("home")).click();
     }
 
-    private void submitContactForm() {
+    public void submitContactForm() {
         wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
     }
 
-    private void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData) {
         wd.findElement(By.name("firstname")).click();
         wd.findElement(By.name("firstname")).clear();
         wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstName());
@@ -85,21 +132,7 @@ public class ContactCreator {
         wd.findElement(By.name("byear")).sendKeys(contactData.getbYear());
     }
 
-    private void goToAddContact() {
+    public void goToAddContact() {
         wd.findElement(By.linkText("add new")).click();
-    }
-
-    @AfterMethod
-    public void tearDown() {
-        wd.quit();
-    }
-    
-    public static boolean isAlertPresent(FirefoxDriver wd) {
-        try {
-            wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
     }
 }

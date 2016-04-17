@@ -1,4 +1,4 @@
-package jft.addressbook;
+package jft.addressbook.model;
 
 public class GroupData {
     private final String name;
