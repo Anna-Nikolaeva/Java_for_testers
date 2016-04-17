@@ -4,6 +4,7 @@ package jft.sandbox;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+
 /**
  * Created by Anna on 17.04.16.
  */
@@ -22,6 +23,8 @@ public class PointTests {
         Point p4 = new Point(23.56, -123.62);
         Double distance = (double)Math.round(p2.calculateDistance(p4) * 100d) / 100d;
         Assert.assertEquals(distance, 113.5);
+
+        Ass
 
     }
 }
