@@ -23,7 +23,6 @@ public class ContactHelper extends HelperBase {
         type(By.name("lastname"),contactData.getLastname());
         type(By.name("nickname"),contactData.getNickname());
         type(By.name("company"),contactData.getCompanyName());
-        click(By.name("theform"));
         type(By.name("home"),contactData.getHomePhone());
         type(By.name("mobile"),contactData.getMobilePhone());
         type(By.name("email"),contactData.getEmail());
@@ -53,5 +52,13 @@ public class ContactHelper extends HelperBase {
     public void acceptDeletionAlert() {
 
         wd.switchTo().alert().accept();
+    }
+
+    public void clickContactModification() {
+        click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
+    }
+
+    public void submitContactModification() {
+        click(By.name("update"));
     }
 }
