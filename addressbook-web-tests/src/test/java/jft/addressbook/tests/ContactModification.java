@@ -13,7 +13,7 @@ public class ContactModification extends TestBase {
 
         app.getNavigationHelper().goHome();
         app.getContactHelper().clickContactModification();
-        app.getContactHelper().fillContactForm(new ContactData("firstUpdated", "middleUp", "lastUp", "nickname", "Microsoft", "111222333", "444555666", "first.lastmiddle.@microsoft.com", "1978"));
+        app.getContactHelper().fillContactForm(new ContactData("firstUpdated", "middleUp", "lastUp", "nickname", "Microsoft", "111222333", "444555666", "first.lastmiddle.@microsoft.com", "1978",null),false);
         app.getContactHelper().submitContactModification();
         app.getNavigationHelper().goHome();
     }
