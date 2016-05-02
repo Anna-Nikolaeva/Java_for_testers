@@ -8,7 +8,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * Created by Anna on 02.05.16.
  */
 public class GroupHelper {
-    FirefoxDriver wd;
+
+    private FirefoxDriver wd;
+
+    public GroupHelper(FirefoxDriver wd) {
+        this.wd=wd;
+    }
 
     public void returnToGroupPage() {
         wd.findElement(By.linkText("group page")).click();
