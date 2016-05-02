@@ -1,6 +1,7 @@
 package jft.addressbook.tests;
 
 import jft.addressbook.appmanager.ApplicationManager;
+import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -10,7 +11,7 @@ import org.testng.annotations.BeforeMethod;
 public class TestBase {
 
 
-    protected final ApplicationManager app = new ApplicationManager();
+    protected final ApplicationManager app = new ApplicationManager(BrowserType.SAFARI);
 
     @BeforeMethod
     public void setUp() throws Exception {
