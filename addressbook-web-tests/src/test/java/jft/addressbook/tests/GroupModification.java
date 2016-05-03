@@ -1,6 +1,7 @@
 package jft.addressbook.tests;
 
 import jft.addressbook.model.GroupData;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
@@ -12,6 +13,7 @@ public class GroupModification extends TestBase {
     public void testGroupModification(){
 
         app.getNavigationHelper().goToGroupPage();
+        int before = app.getGroupHelper().getGroupCount();
         if(! app.getGroupHelper().isThereAGroup()){
             app.getGroupHelper().createGroup(new GroupData("first", null, null));
         }
@@ -20,6 +22,8 @@ public class GroupModification extends TestBase {
         app.getGroupHelper().fillGroupForm(new GroupData("firstupdated", "secondupdated", "thirdupdated"));
         app.getGroupHelper().submitGroupModification();
         app.getGroupHelper().returnToGroupPage();
+        int after = app.getGroupHelper().getGroupCount();
+        Assert.assertEquals(before,after);
     }
 
 }
