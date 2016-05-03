@@ -1,12 +1,17 @@
 package jft.addressbook.appmanager;
 
 import jft.addressbook.model.ContactData;
+import jft.addressbook.model.GroupData;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Anna on 02.05.16.
@@ -85,5 +90,17 @@ public class ContactHelper extends HelperBase {
 
     public int getGroupCount() {
         return wd.findElements(By.name("selected[]")).size();
+    }
+
+    public List<ContactData> getGroupList() {
+        List<ContactData> contacts = new ArrayList<ContactData>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for(WebElement el:elements){
+            String lName = el.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            String fName = el.findElement(By.cssSelector("td:nth-child(3)")).getText();
+            ContactData con = new ContactData(fName,null,lName,null,null,null,null,null,null,null);
+            contacts.add(con);
+        }
+        return contacts;
     }
 }

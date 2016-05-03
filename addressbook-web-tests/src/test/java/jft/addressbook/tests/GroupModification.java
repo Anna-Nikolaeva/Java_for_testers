@@ -4,6 +4,8 @@ import jft.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 /**
  * Created by Anna on 02.05.16.
  */
@@ -13,17 +15,17 @@ public class GroupModification extends TestBase {
     public void testGroupModification(){
 
         app.getNavigationHelper().goToGroupPage();
-        int before = app.getGroupHelper().getGroupCount();
         if(! app.getGroupHelper().isThereAGroup()){
             app.getGroupHelper().createGroup(new GroupData("first", null, null));
         }
-        app.getGroupHelper().selectFirstGroup(before-1);
+        List<GroupData> before = app.getGroupHelper().getGroupList();
+        app.getGroupHelper().selectFirstGroup(before.size()-1);
         app.getGroupHelper().groupModification();
         app.getGroupHelper().fillGroupForm(new GroupData("firstupdated", "secondupdated", "thirdupdated"));
         app.getGroupHelper().submitGroupModification();
         app.getGroupHelper().returnToGroupPage();
-        int after = app.getGroupHelper().getGroupCount();
-        Assert.assertEquals(before,after);
+        List<GroupData> after = app.getGroupHelper().getGroupList();
+        Assert.assertEquals(before.size(),after.size());
     }
 
 }
