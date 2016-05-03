@@ -1,5 +1,6 @@
 package jft.addressbook.tests;
 
+import jft.addressbook.model.ContactData;
 import org.testng.annotations.Test;
 
 /**
@@ -11,6 +12,10 @@ public class ContactDeletion  extends TestBase{
     public void testContactDeletion(){
 
         app.getNavigationHelper().goHome();
+        if(!app.getContactHelper().isThereAContact()){
+            app.getContactHelper().createAContact(new ContactData("first", "middle", "last", "nickname", "Microsoft", "111222333", "444555666", "first.lastmiddle.@microsoft.com", "1978","first"));
+            app.getNavigationHelper().goHome();
+        }
         app.getContactHelper().selectFirstContact();
         app.getContactHelper().deleteSelectedContact();
         app.getContactHelper().acceptDeletionAlert();
