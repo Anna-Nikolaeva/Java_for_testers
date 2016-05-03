@@ -50,9 +50,9 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void selectFirstContact() {
+    public void selectFirstContact(int index) {
 
-        click(By.name("selected[]"));
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     public void deleteSelectedContact() {

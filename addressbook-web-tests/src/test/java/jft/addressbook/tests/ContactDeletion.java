@@ -18,7 +18,7 @@ public class ContactDeletion  extends TestBase{
             app.getContactHelper().createAContact(new ContactData("first", "middle", "last", "nickname", "Microsoft", "111222333", "444555666", "first.lastmiddle.@microsoft.com", "1978","first"));
             app.getNavigationHelper().goHome();
         }
-        app.getContactHelper().selectFirstContact();
+        app.getContactHelper().selectFirstContact(before-1);
         app.getContactHelper().deleteSelectedContact();
         app.getContactHelper().acceptDeletionAlert();
         app.getNavigationHelper().goHome();

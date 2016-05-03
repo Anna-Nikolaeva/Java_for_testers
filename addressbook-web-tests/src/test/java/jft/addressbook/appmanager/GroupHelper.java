@@ -36,11 +36,9 @@ public class GroupHelper extends HelperBase {
         click(By.name("delete"));
     }
 
-    public void selectFirstGroup() {
-        click(By.cssSelector("span.group"));
-        if (!wd.findElement(By.name("selected[]")).isSelected()) {
-            click(By.name("selected[]"));
-        }
+    public void selectFirstGroup(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
+
     }
 
     public void groupModification() {
