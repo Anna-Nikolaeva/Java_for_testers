@@ -10,6 +10,34 @@ public class ContactData {
     private final String mobilePhone;
     private final String email;
     private final String bYear;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (firstName != null ? !firstName.equals(that.firstName) : that.firstName != null) return false;
+        return lastname != null ? lastname.equals(that.lastname) : that.lastname == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstName != null ? firstName.hashCode() : 0;
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "lastname='" + lastname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                '}';
+    }
+
     private String group;
 
     public ContactData(String firstName, String middleName, String lastname, String nickname, String companyName, String homePhone, String mobilePhone, String email, String bYear, String group) {
