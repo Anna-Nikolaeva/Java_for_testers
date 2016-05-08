@@ -16,7 +16,10 @@ public class ContactDeletion  extends TestBase{
     public void ensurePrecondition(){
         app.goTo().homePage();
         if(!app.contact().isThereAContact()){
-            app.contact().create(new ContactData("first", "middle", "last", "nickname", "Microsoft", "111222333", "444555666", "first.lastmiddle.@microsoft.com", "1978","first"));
+            app.contact().create(new ContactData().withFirstName("first").withMiddleName("middle")
+                    .withLastname("last").withNickname("nickname").withCompanyName("Microsoft")
+                    .withHomePhone("111222333").withMobilePhone("444555666")
+                    .withEmail("first.lastmiddle.@microsoft.com").withbYear("1978").withGroup("first"));
             app.goTo().homePage();
         }
     }

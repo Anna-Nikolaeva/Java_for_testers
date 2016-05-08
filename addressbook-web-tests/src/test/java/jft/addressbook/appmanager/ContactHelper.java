@@ -101,8 +101,7 @@ public class ContactHelper extends HelperBase {
             String lName = el.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String fName = el.findElement(By.cssSelector("td:nth-child(3)")).getText();
             int id = Integer.parseInt(el.findElement(By.tagName("input")).getAttribute("value"));
-            ContactData con = new ContactData(id,fName,null,lName,null,null,null,null,null,null,null);
-            contacts.add(con);
+            contacts.add(new ContactData().withId(id).withFirstName(fName).withLastname(lName));
         }
         return contacts;
     }
