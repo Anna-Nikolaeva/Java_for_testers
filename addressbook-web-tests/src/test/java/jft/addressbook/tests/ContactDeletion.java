@@ -2,6 +2,7 @@ package jft.addressbook.tests;
 
 import jft.addressbook.model.ContactData;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -11,14 +12,16 @@ import java.util.List;
  */
 public class ContactDeletion  extends TestBase{
 
-    @Test
-    public void testContactDeletion(){
-
+    @BeforeMethod
+    public void ensurePrecondition(){
         app.getNavigationHelper().goHome();
         if(!app.getContactHelper().isThereAContact()){
             app.getContactHelper().createAContact(new ContactData("first", "middle", "last", "nickname", "Microsoft", "111222333", "444555666", "first.lastmiddle.@microsoft.com", "1978","first"));
             app.getNavigationHelper().goHome();
         }
+    }
+    @Test
+    public void testContactDeletion(){
         List<ContactData> before = app.getContactHelper().getGroupList();
         app.getContactHelper().selectFirstContact(before.size()-1);
         app.getContactHelper().deleteSelectedContact();

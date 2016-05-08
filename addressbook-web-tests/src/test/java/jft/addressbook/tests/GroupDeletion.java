@@ -2,19 +2,23 @@ package jft.addressbook.tests;
 
 import jft.addressbook.model.GroupData;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.List;
 
 public class GroupDeletion extends TestBase {
 
-    @Test
-    public void testGroupDeletion() {
-
+    @BeforeMethod
+    public void ensurePrecondition(){
         app.getNavigationHelper().goToGroupPage();
         if(! app.getGroupHelper().isThereAGroup()){
             app.getGroupHelper().createGroup(new GroupData("first", null, null));
         }
+    }
+
+    @Test
+    public void testGroupDeletion() {
         List<GroupData> before = app.getGroupHelper().getGroupList();
         app.getGroupHelper().selectFirstGroup(before.size()-1);
         app.getGroupHelper().deleteSelectedGroups();
