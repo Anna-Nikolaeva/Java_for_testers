@@ -4,7 +4,6 @@ import jft.addressbook.model.GroupData;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.security.acl.Group;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,11 +12,11 @@ public class GroupCreator extends TestBase {
     @Test
     public void testGroupCreation() {
 
-        app.getNavigationHelper().goToGroupPage();
-        List<GroupData> before = app.getGroupHelper().getGroupList();
+        app.goTo().groupPage();
+        List<GroupData> before = app.group().list();
         GroupData newGroup = new GroupData("first", null, null);
-        app.getGroupHelper().createGroup(newGroup);
-        List<GroupData> after = app.getGroupHelper().getGroupList();
+        app.group().create(newGroup);
+        List<GroupData> after = app.group().list();
         Assert.assertEquals(after.size(), before.size() + 1);
 
         before.add(newGroup);
