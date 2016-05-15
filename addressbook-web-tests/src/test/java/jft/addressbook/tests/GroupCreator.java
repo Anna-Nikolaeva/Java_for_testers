@@ -1,10 +1,13 @@
 package jft.addressbook.tests;
 
 import jft.addressbook.model.GroupData;
-import org.testng.Assert;
+import jft.addressbook.model.Groups;
 import org.testng.annotations.Test;
 
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreator extends TestBase {
 
@@ -12,15 +15,14 @@ public class GroupCreator extends TestBase {
     public void testGroupCreation() {
 
         app.goTo().groupPage();
-        Set<GroupData> before = app.group().all();
+        Groups before = app.group().all();
         GroupData newGroup = new GroupData().withName("test1");
         app.group().create(newGroup);
         Set<GroupData> after = app.group().all();
-        Assert.assertEquals(after.size(), before.size() + 1);
+        assertThat(after.size(), equalTo(before.size() + 1));
 
-        newGroup.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt());
-        before.add(newGroup);
-        Assert.assertEquals(before, after);
+         assertThat(after, equalTo(
+                before.withAdded(newGroup.withId(after.stream().mapToInt((g)->g.getId()).max().getAsInt()))));
     }
 
 }
