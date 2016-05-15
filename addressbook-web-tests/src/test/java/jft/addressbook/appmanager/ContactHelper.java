@@ -11,7 +11,9 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Anna on 02.05.16.
@@ -70,9 +72,12 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void clickContactModification(int index) {
-        WebElement el = wd.findElements(By.name("entry")).get(index);
-        el.findElement(By.cssSelector("td:nth-child(8)>a")).click();
+    public void clickContactModification(int id) {
+
+        WebElement checkbox = wd.findElement(By.id(""+id));
+        checkbox.findElement(By.xpath("./../../td[8]/a")).click();
+        //WebElement el = wd.findElements(By.name("entry")).get(index);
+        //el.findElement(By.cssSelector("td:nth-child(8)>a")).click();
         //click(By.xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img"));
     }
 
@@ -106,9 +111,21 @@ public class ContactHelper extends HelperBase {
         return contacts;
     }
 
-    public void modify(int index, ContactData newContact) {
-        clickContactModification(index);
-        fillContactForm(newContact,false);
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<ContactData>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for(WebElement el:elements){
+            String lName = el.findElement(By.cssSelector("td:nth-child(2)")).getText();
+            String fName = el.findElement(By.cssSelector("td:nth-child(3)")).getText();
+            int id = Integer.parseInt(el.findElement(By.tagName("input")).getAttribute("value"));
+            contacts.add(new ContactData().withId(id).withFirstName(fName).withLastname(lName));
+        }
+        return contacts;
+    }
+
+    public void modify(ContactData contact) {
+        clickContactModification(contact.getId());
+        fillContactForm(contact,false);
         submitContactModification();
     }
 
@@ -116,5 +133,15 @@ public class ContactHelper extends HelperBase {
         selectFirstContact(index);
         deleteSelectedContact();
         acceptDeletionAlert();
+    }
+
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
+        deleteSelectedContact();
+        acceptDeletionAlert();
+    }
+
+    private void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value='"+id+"']")).click();
     }
 }
