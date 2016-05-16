@@ -89,6 +89,7 @@ public class ContactHelper extends HelperBase {
         goToAddContact();
         fillContactForm(contact,true);
         submitContactForm();
+        contactCache = null;
     }
 
     public boolean isThereAContact() {
@@ -111,22 +112,28 @@ public class ContactHelper extends HelperBase {
         return contacts;
     }
 
+    private Contacts contactCache = null;
+
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null){
+            return new Contacts(contactCache);
+        }
+        contactCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for(WebElement el:elements){
             String lName = el.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String fName = el.findElement(By.cssSelector("td:nth-child(3)")).getText();
             int id = Integer.parseInt(el.findElement(By.tagName("input")).getAttribute("value"));
-            contacts.add(new ContactData().withId(id).withFirstName(fName).withLastname(lName));
+            contactCache.add(new ContactData().withId(id).withFirstName(fName).withLastname(lName));
         }
-        return contacts;
+        return new Contacts(contactCache);
     }
 
     public void modify(ContactData contact) {
         clickContactModification(contact.getId());
         fillContactForm(contact,false);
         submitContactModification();
+        contactCache = null;
     }
 
     public void delete(int index) {
@@ -139,6 +146,7 @@ public class ContactHelper extends HelperBase {
         selectContactById(contact.getId());
         deleteSelectedContact();
         acceptDeletionAlert();
+        contactCache = null;
     }
 
     private void selectContactById(int id) {
