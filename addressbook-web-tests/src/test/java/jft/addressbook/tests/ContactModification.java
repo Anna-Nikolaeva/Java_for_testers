@@ -42,8 +42,8 @@ public class ContactModification extends TestBase {
                 .withbYear("1978").withGroup("first");
         app.contact().modify(newContact);
         app.goTo().homePage();
+        assertThat(app.contact().getGroupCount(), equalTo(before.size()));
         Contacts after = app.contact().all();
-        assertThat(after.size(), equalTo(before.size()));
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(newContact)));
     }
 }
