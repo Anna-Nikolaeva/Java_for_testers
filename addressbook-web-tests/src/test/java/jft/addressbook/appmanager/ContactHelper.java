@@ -3,17 +3,13 @@ package jft.addressbook.appmanager;
 import jft.addressbook.model.ContactData;
 import jft.addressbook.model.Contacts;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Anna on 02.05.16.
@@ -37,7 +33,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("home"),contactData.getHomePhone());
         type(By.name("mobile"),contactData.getMobilePhone());
         type(By.name("work"),contactData.getWorkPhone());
-        type(By.name("email"),contactData.getEmail());
+        type(By.name("email"),contactData.getAllEmails());
         if (!wd.findElement(By.xpath("//div[@id='content']/form/select[1]//option[13]")).isSelected()) {
             click(By.xpath("//div[@id='content']/form/select[1]//option[13]"));
         }
@@ -121,10 +117,12 @@ public class ContactHelper extends HelperBase {
         for(WebElement el:elements){
             String lName = el.findElement(By.cssSelector("td:nth-child(2)")).getText();
             String fName = el.findElement(By.cssSelector("td:nth-child(3)")).getText();
-            String[] phones = el.findElement(By.cssSelector("td:nth-child(6)")).getText().split("\n");
+            String phones = el.findElement(By.cssSelector("td:nth-child(6)")).getText();
+            String address = el.findElement(By.cssSelector("td:nth-child(4)")).getText();
+            String emails = el.findElement(By.cssSelector("td:nth-child(5)")).getText();
             int id = Integer.parseInt(el.findElement(By.tagName("input")).getAttribute("value"));
             contactCache.add(new ContactData().withId(id).withFirstName(fName).withLastname(lName)
-                .withHomePhone(phones[0]).withMobilePhone(phones[1]).withWorkPhone(phones[2]));
+                .withAllPhones(phones).withAddress(address).withAllEmails(emails));
         }
         return new Contacts(contactCache);
     }
@@ -161,8 +159,13 @@ public class ContactHelper extends HelperBase {
         String homePh = wd.findElement(By.name("home")).getAttribute("value");
         String mobilePh = wd.findElement(By.name("mobile")).getAttribute("value");
         String workPh = wd.findElement(By.name("work")).getAttribute("value");
+        String address = wd.findElement(By.name("address")).getText();
+        String email1 = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         return new ContactData().withFirstName(fName).withLastname(lName).withHomePhone(homePh)
-                .withMobilePhone(mobilePh).withWorkPhone(workPh);
+                .withMobilePhone(mobilePh).withWorkPhone(workPh).withAddress(address).withEmail1(email1)
+                .withEmail2(email2).withEmail3(email3);
     }
 }
 
