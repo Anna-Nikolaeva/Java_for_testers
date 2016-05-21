@@ -18,7 +18,7 @@ public class ContactCreator extends TestBase {
 
         app.goTo().homePage();
         Contacts before = app.contact().all();
-        ContactData newContact = new ContactData().withFirstName("first").withMiddleName("middle").withLastname("last").withNickname("nickname").withCompanyName("Microsoft").withHomePhone("111222333").withMobilePhone("444555666").withEmail("first.lastmiddle.@microsoft.com").withbYear("1978").withGroup("first");
+        ContactData newContact = new ContactData().withFirstName("first").withMiddleName("middle").withLastname("last").withNickname("nickname").withCompanyName("Microsoft").withHomePhone("111222333").withMobilePhone("444555666").withWorkPhone("555666777").withEmail("first.lastmiddle.@microsoft.com").withbYear("1978").withGroup("first");
         app.contact().create(newContact);
         app.goTo().homePage();
         assertThat(app.contact().getGroupCount(), equalTo(before.size()+ 1));
