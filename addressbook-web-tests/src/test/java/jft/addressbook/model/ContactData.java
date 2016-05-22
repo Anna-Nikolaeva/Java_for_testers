@@ -1,14 +1,19 @@
 package jft.addressbook.model;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.File;
 
 public class ContactData {
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String firstName;
     private String middleName;
+    @Expose
     private String lastname;
     private String nickname;
     private String companyName;
+    @Expose
     private String homePhone;
     private String mobilePhone;
     private String workPhone;
