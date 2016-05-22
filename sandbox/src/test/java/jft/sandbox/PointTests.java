@@ -24,7 +24,7 @@ public class PointTests {
         Double distance = (double)Math.round(p2.calculateDistance(p4) * 100d) / 100d;
         Assert.assertEquals(distance, 113.5);
 
-        Ass
+
 
     }
 }
