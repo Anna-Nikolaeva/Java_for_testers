@@ -7,6 +7,8 @@ import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertEquals;
@@ -18,7 +20,8 @@ public class ContactCreator extends TestBase {
 
         app.goTo().homePage();
         Contacts before = app.contact().all();
-        ContactData newContact = new ContactData().withFirstName("first").withMiddleName("middle").withLastname("last").withNickname("nickname").withCompanyName("Microsoft").withHomePhone("111222333").withMobilePhone("444555666").withWorkPhone("555666777").withEmail1("first.lastmiddle.@microsoft.com").withbYear("1978").withGroup("first");
+        File photo = new File("src/test/resources/image.png");
+        ContactData newContact = new ContactData().withFirstName("first").withMiddleName("middle").withLastname("last").withNickname("nickname").withCompanyName("Microsoft").withHomePhone("111222333").withMobilePhone("444555666").withWorkPhone("555666777").withEmail1("first.lastmiddle.@microsoft.com").withbYear("1978").withGroup("first").withPhoto(photo);
         app.contact().create(newContact);
         app.goTo().homePage();
         assertThat(app.contact().getGroupCount(), equalTo(before.size()+ 1));
@@ -26,4 +29,5 @@ public class ContactCreator extends TestBase {
         assertThat(after, equalTo
                 (before.withAdded(newContact.withId(after.stream().mapToInt((c)->c.getId()).max().getAsInt()))));
     }
+
 }
