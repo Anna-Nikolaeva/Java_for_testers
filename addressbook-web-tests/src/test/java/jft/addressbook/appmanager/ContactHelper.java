@@ -43,12 +43,12 @@ public class ContactHelper extends HelperBase {
         }
         type(By.name("byear"),contactData.getbYear());
 
-        if(creation){
+        /*if(creation){
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
 
         }else{
             Assert.assertFalse(isElementPresent(By.name("new_group")));
-        }
+        }*/
     }
 
     public void goToAddContact() {
