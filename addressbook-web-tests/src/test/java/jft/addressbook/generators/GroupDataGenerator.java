@@ -3,12 +3,14 @@ package jft.addressbook.generators;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterException;
+import com.thoughtworks.xstream.XStream;
 import jft.addressbook.model.GroupData;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,9 @@ public class GroupDataGenerator {
     @Parameter (names = "-f", description = "Target file")
     public String file;
 
+    @Parameter (names = "-d", description = "Data format")
+    public String format;
+
     public static void main(String[] args) throws IOException {
 
         GroupDataGenerator generator = new GroupDataGenerator();
@@ -34,19 +39,30 @@ public class GroupDataGenerator {
             return;
         }
         generator.run();
-
-        //int count = Integer.parseInt(args[0]);
-        //File file = new File(args[1]);
-
-
     }
 
     private void run() throws IOException {
         List<GroupData> groups = generateGroups(count);
-        save(groups, new File(file));
+        if(format.equals("scv")) {
+            saeAsCSV(groups, new File(file));
+        }else if(format.equals("xml")) {
+            saeAsXML(groups, new File(file));
+        }else{
+            System.out.println("Unrecognized format "+ format);
+        }
     }
 
-    private  void save(List<GroupData> groups, File file) throws IOException {
+    private void saeAsXML(List<GroupData> groups, File file) throws IOException {
+
+        XStream xstream = new XStream();
+        xstream.processAnnotations(GroupData.class);
+        String xml = xstream.toXML(groups);
+        Writer writer = new FileWriter(file);
+        writer.write(xml);
+        writer.close();
+    }
+
+    private  void saeAsCSV(List<GroupData> groups, File file) throws IOException {
 
         Writer writer = new FileWriter(file);
         for(GroupData g:groups){

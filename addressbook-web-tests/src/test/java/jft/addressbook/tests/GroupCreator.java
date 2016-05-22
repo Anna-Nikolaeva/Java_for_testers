@@ -1,5 +1,6 @@
 package jft.addressbook.tests;
 
+import com.thoughtworks.xstream.XStream;
 import jft.addressbook.model.GroupData;
 import jft.addressbook.model.Groups;
 import org.testng.annotations.DataProvider;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,15 +20,17 @@ public class GroupCreator extends TestBase {
 
     @DataProvider
     public Iterator<Object[]> validGroups() throws IOException {
-        List<Object[]> list = new ArrayList<Object[]>();
-        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.scv")));
+        BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")));
+        String xml = "";
         String line = reader.readLine();
         while(line != null){
-            String[] split = line.split(";");
-            list.add(new Object[]{new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
+            xml += line;
             line = reader.readLine();
         }
-        return list.iterator();
+        XStream xStream = new XStream();
+        xStream.processAnnotations(GroupData.class);
+        List<GroupData> groups = (List<GroupData>) xStream.fromXML(xml);
+        return groups.stream().map((g)-> new Object[] {g}).collect(Collectors.toList()).iterator();
     }
 
     @Test(dataProvider = "validGroups")
@@ -34,7 +38,6 @@ public class GroupCreator extends TestBase {
 
         app.goTo().groupPage();
         Groups before = app.group().all();
-        //GroupData newGroup = new GroupData().withName("test1");
         app.group().create(group);
         assertThat(app.group().getGroupCount(), equalTo(before.size() + 1));
         Set<GroupData> after = app.group().all();
