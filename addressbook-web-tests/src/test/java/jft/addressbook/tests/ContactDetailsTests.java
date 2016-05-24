@@ -1,6 +1,5 @@
 package jft.addressbook.tests;
 
-import com.sun.tools.javac.util.ArrayUtils;
 import jft.addressbook.model.ContactData;
 import org.testng.annotations.Test;
 
