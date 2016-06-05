@@ -2,8 +2,7 @@ package jft.addressbook.model;
 
 import com.google.common.collect.ForwardingSet;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by Anna on 15.05.16.
@@ -18,6 +17,10 @@ public class Contacts extends ForwardingSet<ContactData> {
 
     public Contacts() {
         this.delegate = new HashSet<ContactData>();
+    }
+
+    public Contacts(Collection<ContactData> contacts) {
+        this.delegate = new HashSet<ContactData>(contacts);
     }
 
     @Override
@@ -38,4 +41,11 @@ public class Contacts extends ForwardingSet<ContactData> {
         contacts.remove(contact);
         return contacts;
     }
+
+   public Contacts sortedContacts() {
+
+       Contacts contacts = new Contacts(this);
+       contacts.stream().sorted((c1, c2) -> Integer.compare((c1.getId()), c2.getId()));
+       return contacts;
+   }
 }

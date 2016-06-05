@@ -29,7 +29,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("middlename"),contactData.getMiddleName());
         type(By.name("lastname"),contactData.getLastname());
         type(By.name("nickname"),contactData.getNickname());
-        attach(By.name("photo"),contactData.getPhoto());
+        //attach(By.name("photo"),contactData.getPhoto());
         type(By.name("company"),contactData.getCompanyName());
         type(By.name("home"),contactData.getHomePhone());
         type(By.name("mobile"),contactData.getMobilePhone());
@@ -43,12 +43,6 @@ public class ContactHelper extends HelperBase {
         }
         type(By.name("byear"),contactData.getbYear());
 
-        /*if(creation){
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
-
-        }else{
-            Assert.assertFalse(isElementPresent(By.name("new_group")));
-        }*/
     }
 
     public void goToAddContact() {
