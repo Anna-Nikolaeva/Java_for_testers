@@ -75,5 +75,6 @@ public class GroupCreator extends TestBase {
         assertThat(app.group().getGroupCount(), equalTo(before.size()));
         Set<GroupData> after = app.db().groups();
         assertThat(after, equalTo(before));
+        verifyGroupListInUI();
     }
 }

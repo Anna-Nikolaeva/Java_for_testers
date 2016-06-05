@@ -51,12 +51,8 @@ public class ContactCreator extends TestBase {
         app.goTo().homePage();
         assertThat(app.contact().getGroupCount(), equalTo(before.size()+ 1));
         Contacts after = app.db().contacts();
-        //Comparator<? super ContactData> byId = (c1, c2)-> Integer.compare(c1.getId(), c2.getId());
-        //before.withAdded(contact.withId(after.stream().mapToInt((c)->c.getId()).max().getAsInt()));
-        //before.sortedContacts();
-        //after.sortedContacts();
         assertThat(after, equalTo(before.withAdded(contact.withId(after.stream().mapToInt((c)->c.getId()).max().getAsInt()))));
-        //Assert.assertEquals(after,before.withAdded(contact.withId(after.stream().mapToInt((c)->c.getId()).max().getAsInt())));
+        verifyContactListUI();
     }
 
 }
