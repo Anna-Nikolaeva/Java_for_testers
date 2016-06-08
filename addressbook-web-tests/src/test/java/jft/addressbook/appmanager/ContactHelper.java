@@ -176,6 +176,19 @@ public class ContactHelper extends HelperBase {
         checkbox.findElement(By.xpath("./../../td[7]/a")).click();
     }
 
+    public void addToGroup(ContactData contact, String group) {
+        selectContactById(contact.getId());
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(group);
+        wd.findElement(By.name("add")).click();
+    }
+
+    public void deleteFromGroup(int id, String group) {
+
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group);
+        selectContactById(id);
+        wd.findElement(By.name("remove")).click();
+
+    }
 }
 
 

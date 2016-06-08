@@ -38,6 +38,7 @@
         <!-- Names the annotated entity class -->
         <mapping class="jft.addressbook.model.GroupData"/>
         <mapping class="jft.addressbook.model.ContactData"/>
+        <mapping class="jft.addressbook.model.ContactsInGroups"/>
 
     </session-factory>
 
