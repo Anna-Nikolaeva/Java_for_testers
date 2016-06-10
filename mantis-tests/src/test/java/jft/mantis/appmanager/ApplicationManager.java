@@ -22,6 +22,7 @@ public class ApplicationManager {
 
     private String browser;
     private RegistrationHelper registrationHelper;
+    private FTPHelper ftp;
 
     public ApplicationManager(String browser){
 
@@ -73,5 +74,12 @@ public class ApplicationManager {
             wd.get(properties.getProperty("web.baseUrl"));
         }
         return wd;
+    }
+
+    public FTPHelper ftp(){
+        if(ftp == null) {
+            ftp = new FTPHelper(this);
+        }
+        return ftp;
     }
 }
