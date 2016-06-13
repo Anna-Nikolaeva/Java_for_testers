@@ -24,6 +24,7 @@ public class ApplicationManager {
     private RegistrationHelper registrationHelper;
     private FTPHelper ftp;
     private MailHelper mailHelper;
+    private DBHelper dbHelper;
 
     public ApplicationManager(String browser){
 
@@ -34,6 +35,7 @@ public class ApplicationManager {
     public void init() throws IOException {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+        dbHelper = new DBHelper();
 
     }
 
@@ -89,5 +91,10 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
+    }
+
+    public DBHelper db(){
+        return dbHelper;
+
     }
 }

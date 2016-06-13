@@ -1,5 +1,6 @@
 package jft.mantis.appmanager;
 
+import jft.mantis.model.Users;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -17,13 +18,21 @@ public class DBHelper {
         private final SessionFactory sessionFactory;
     public DBHelper() {
 
-        // A SessionFactory is set up once for an application!
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
         sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
+    public Users users(){
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<Users> result = session.createQuery("from mantis_user_table").list();
+        session.getTransaction().commit();
+        session.close();
+        return result.get(1);
+    }
+/*
     public Groups groups() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -80,5 +89,5 @@ public class DBHelper {
         session.close();
         System.out.println(result.size());
         return result.get(0);
-    }
+    }*/
 }
