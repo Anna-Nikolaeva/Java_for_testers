@@ -1,0 +1,16 @@
+apply plugin:"java"
+apply plugin: "application"
+mainClassName = 'jft.sandbox.first'
+
+repositories{
+    mavenCentral();
+}
+
+dependencies{
+    compile 'org.testng:testng:6.9.10'
+
+}
+
+test{
+    useTestNG(  )
+}
