@@ -1,5 +1,7 @@
 package jft.mantis.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,7 +19,18 @@ public class Users {
     @Column(name = "id")
     private int id;
     @Column(name = "username")
-    private int username;
+    private String username;
+    @Column(name = "email")
+   // @Type(type = "text")
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public int getId() {
         return id;
@@ -27,11 +40,11 @@ public class Users {
         this.id = id;
     }
 
-    public int getUsername() {
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(int username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 }

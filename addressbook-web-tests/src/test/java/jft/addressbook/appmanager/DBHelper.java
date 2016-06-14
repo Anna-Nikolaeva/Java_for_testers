@@ -14,8 +14,7 @@ import java.util.List;
  */
 public class DBHelper {
 
-
-        private final SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
     public DBHelper() {
 
         // A SessionFactory is set up once for an application!

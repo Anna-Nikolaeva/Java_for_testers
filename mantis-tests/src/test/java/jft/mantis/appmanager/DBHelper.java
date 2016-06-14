@@ -13,11 +13,19 @@ import java.util.List;
  * Created by Anna on 05.06.16.
  */
 public class DBHelper {
+    private ApplicationManager app;
+    private final SessionFactory sessionFactory;
 
-
-        private final SessionFactory sessionFactory;
     public DBHelper() {
 
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure() // configures settings from hibernate.cfg.xml
+                .build();
+        sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+    }
+
+    public DBHelper(ApplicationManager app) {
+        this.app = app;
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure() // configures settings from hibernate.cfg.xml
                 .build();
@@ -27,10 +35,10 @@ public class DBHelper {
     public Users users(){
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<Users> result = session.createQuery("from mantis_user_table").list();
+        List<Users> result = session.createQuery("from Users").list();
         session.getTransaction().commit();
         session.close();
-        return result.get(1);
+        return result.get(2);
     }
 /*
     public Groups groups() {

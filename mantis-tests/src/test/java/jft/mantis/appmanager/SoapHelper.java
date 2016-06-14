@@ -3,7 +3,6 @@ package jft.mantis.appmanager;
 import biz.futureware.mantis.rpc.soap.client.*;
 import jft.mantis.model.Issue;
 import jft.mantis.model.Project;
-import org.testng.SkipException;
 
 import javax.xml.rpc.ServiceException;
 import java.math.BigInteger;
