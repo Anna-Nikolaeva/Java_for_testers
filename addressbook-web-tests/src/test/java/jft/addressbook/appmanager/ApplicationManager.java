@@ -44,7 +44,7 @@ public class ApplicationManager {
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
         dbHelper = new DBHelper();
 
-        if("".equals(properties.getProperty("selenuim.server"))) {
+        if("".equals(properties.getProperty("selenium.server"))) {
 
             if (browser.equals(BrowserType.FIREFOX)) {
                 wd = new FirefoxDriver();
@@ -56,7 +56,7 @@ public class ApplicationManager {
         }else {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setBrowserName(browser);
-            wd = new RemoteWebDriver(new URL(properties.getProperty("selenuim.server")), capabilities);
+            wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
         }
 
         wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
